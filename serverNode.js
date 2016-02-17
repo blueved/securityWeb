@@ -51,6 +51,7 @@ var pool      =    mysql.createPool({
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // HANDLERS
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// login: parameter is the user credential
 var loginHandler = function loginHandler(req,res) {
     pool.getConnection(function(err,connection){
         if (err) {
@@ -72,12 +73,12 @@ var loginHandler = function loginHandler(req,res) {
         });
   });
 };
-
-function insertUserHandler (req, res){
+// add new user to db
+va insertUserHandler = function  (req, res){
 	
-}
-
-function userListHandler(req,res){
+};
+// get the list of all users
+var userListHandler = function (req,res){
 	pool.getConnection(function(err,connection){
         if (err) {
           connection.release();
@@ -96,7 +97,7 @@ function userListHandler(req,res){
               return;     
         });
   });
-}
+};
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ROUTING
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
