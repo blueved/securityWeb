@@ -18,7 +18,7 @@ connection.connect(function(err){
 });
 
 app.get("/",function(req,res){
-    connection.query('SELECT * from security LIMIT 2', function(err, rows, fields) {
+    connection.query('SELECT * from clientele', function(err, rows, fields) {
         connection.end();
           if (!err){
             console.log('The solution is: ', rows);
@@ -33,9 +33,9 @@ app.get("/",function(req,res){
 
 app.listen(3000);
 */
-
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // run this server: node serverNode.js
-
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 var express   =    require("express");
 var mysql     =    require('mysql');
 var app       =    express();
@@ -48,34 +48,66 @@ var pool      =    mysql.createPool({
     database : 'vids',
     debug    :  false
 });
-
-function handle_database(req,res) {
-    
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// HANDLERS
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+var loginHandler = function loginHandler(req,res) {
     pool.getConnection(function(err,connection){
         if (err) {
           connection.release();
           res.json({"code" : 100, "status" : "Error in connection database"});
           return;
         }   
-
         console.log('connected as id ' + connection.threadId);
-        
+        var selectQuery = "select * from clientele where username = " + req.query.username;
+        connection.query(selectQuery,function(err,rows){
+            connection.release();
+            if(!err) {
+                res.json(rows);
+            }           
+        });
+        connection.on('error', function(err) {      
+              res.json({"code" : 100, "status" : "Error in connection database"});
+              return;     
+        });
+  });
+};
+
+function insertUserHandler (req, res){
+	
+}
+
+function userListHandler(req,res){
+	pool.getConnection(function(err,connection){
+        if (err) {
+          connection.release();
+          res.json({"code" : 100, "status" : "Error in connection database"});
+          return;
+        }   
+        console.log('connected as id ' + connection.threadId);
         connection.query("select * from clientele",function(err,rows){
             connection.release();
             if(!err) {
                 res.json(rows);
             }           
         });
-
         connection.on('error', function(err) {      
               res.json({"code" : 100, "status" : "Error in connection database"});
               return;     
         });
   });
 }
-
-app.get("/",function(req,res){-
-        handle_database(req,res);
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ROUTING
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+app.get("/",function(req,res){
+	res.send("index.html");
+});
+app.get("/logingRequest", function(req,res){
+	loginHandler(req, res);
+});
+app.get("/userList", function(res,req){
+	userListHandler(req,res);
 });
 
 app.listen(3000);

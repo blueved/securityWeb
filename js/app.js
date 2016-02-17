@@ -3,7 +3,7 @@
 	  app.controller('MainController', function(){
 		  
 	  });
-	  app.controller ('LoginController', ['$http','requestService', function($http, requestService){
+	  app.controller ('LoginController', ['requestService', function( requestService){
 		  var self = this;
 		  var formData = {
                 firstname: "default",
@@ -25,7 +25,8 @@
 			self.submitForm = function() {        
 				formData = self.form;
 				console.log(formData);
-				requestService( data).success(function(){
+				requestService( data)
+				.success(function(){
 					console.log("success");
 				});
 			};
@@ -39,8 +40,12 @@
 	  app.factory('requestService', function($http){
 		  var factory = {};
 		  factory.loginRequest = function(data){
-				var url = "logingRequest/data"; 
-				return $http({  method: 'GET',  url: '/url'});
+				var url = "logingRequest/"; 
+				return $http({  method: 'GET',  url: url, params: data});
+		  };
+		  factory.userList = function(){
+				var url = "userList/"; 
+				return $http({  method: 'GET',  url: url});
 		  };
 		  
 		  return factory;
