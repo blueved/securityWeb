@@ -1,5 +1,6 @@
 var express    = require("express");
 var mysql      = require('mysql');
+/*
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'pi',
@@ -31,9 +32,10 @@ app.get("/",function(req,res){
 });
 
 app.listen(3000);
+*/
 
 // run this server: node serverNode.js
-/*
+
 var express   =    require("express");
 var mysql     =    require('mysql');
 var app       =    express();
@@ -41,9 +43,9 @@ var app       =    express();
 var pool      =    mysql.createPool({
     connectionLimit : 100, //important
     host     : 'localhost',
-    user     : 'root',
-    password : '',
-    database : 'address_book',
+    user     : 'pi',
+    password : 'pi',
+    database : 'vids',
     debug    :  false
 });
 
@@ -58,7 +60,7 @@ function handle_database(req,res) {
 
         console.log('connected as id ' + connection.threadId);
         
-        connection.query("select * from user",function(err,rows){
+        connection.query("select * from clientele",function(err,rows){
             connection.release();
             if(!err) {
                 res.json(rows);
@@ -77,4 +79,3 @@ app.get("/",function(req,res){-
 });
 
 app.listen(3000);
-*/
