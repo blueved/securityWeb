@@ -1,8 +1,26 @@
 (function() {
 	  var app = angular.module('securityApp', []);
+    
+    app.factory('requestService', function($http){
+		  var factory = {};
+		  factory.loginRequest = function(data){
+              debugger;
+				var url = "/logingRequest"; 
+                console.log("sending loging request");
+				return $http({  method: 'GET',  url: url, params: data});
+		  };
+		  factory.userList = function(){
+				var url = "userList/"; 
+				return $http({  method: 'GET',  url: url});
+		  };
+		  
+		  return factory;
+	  });
+    
 	  app.controller('MainController', function(){
 		  
-	  });
+	  }); 
+    
 	  app.controller ('LoginController', ['requestService', function( requestService){
 		  var self = this;
 		  var formData = {
@@ -25,10 +43,12 @@
 			self.submitForm = function() {        
 				formData = self.form;
 				console.log(formData);
-				requestService( data)
-				.success(function(){
-					console.log("success");
-				});
+				requestService.loginRequest( formData)
+				.then(function mysuccess (response){
+					console.log("success: "+ response.data); 
+				}, function myError (response){
+                    console.log("ERROR : "+ response.statusText);
+                });
 			};
 			
 			self.init = function(){
@@ -37,17 +57,5 @@
 			self.init();
 	  }]);
 	  
-	  app.factory('requestService', function($http){
-		  var factory = {};
-		  factory.loginRequest = function(data){
-				var url = "logingRequest/"; 
-				return $http({  method: 'GET',  url: url, params: data});
-		  };
-		  factory.userList = function(){
-				var url = "userList/"; 
-				return $http({  method: 'GET',  url: url});
-		  };
-		  
-		  return factory;
-	  });
+	  
   })();

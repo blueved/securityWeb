@@ -55,20 +55,26 @@ var pool      =    mysql.createPool({
 // HANDLERS
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // login: parameter is the user credential
-var loginHandler = function loginHandler(req,res) {
+var loginHandler = function (req,res) {
     pool.getConnection(function(err,connection){
         if (err) {
           connection.release();
           res.json({"code" : 100, "status" : "Error in connection database"});
           return;
         }   
-        console.log('connected as id ' + connection.threadId);
-        var selectQuery = "select * from clientele where username = " + req.query.username;
+        console.log('connected as id ' + connection.threadId + " : "+ req.query.username);
+        var selectQuery = "select * from clientele where username = '"+ req.query.username+"'";
         connection.query(selectQuery,function(err,rows){
             connection.release();
             if(!err) {
+                console.log("found a couple of rows "+  rows);
                 res.json(rows);
-            }           
+                
+            }  else{
+                console.log("Hooo");
+                res.json({"code" : 202, "status" : "No data found"});
+            }
+            
         });
         connection.on('error', function(err) {      
               res.json({"code" : 100, "status" : "Error in connection database"});
@@ -109,10 +115,11 @@ app.get("/",function(req,res){
 	res.sendFile(path.join(__dirname + '/index.html'));
 });
 app.get("/logingRequest", function(req,res){
+    console.log("login request received" );
 	loginHandler(req, res);
 });
 app.get("/userList", function(res,req){
 	userListHandler(req,res);
 });
 
-app.listen(3000);
+app.listen(3001);
