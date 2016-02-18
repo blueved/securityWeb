@@ -1,5 +1,6 @@
 var express    = require("express");
 var mysql      = require('mysql');
+var path       = require('path');
 /*
 var connection = mysql.createConnection({
   host     : 'localhost',
@@ -40,6 +41,8 @@ var express   =    require("express");
 var mysql     =    require('mysql');
 var app       =    express();
 
+app.use(express.static(__dirname + '/public'));
+
 var pool      =    mysql.createPool({
     connectionLimit : 100, //important
     host     : 'localhost',
@@ -74,7 +77,7 @@ var loginHandler = function loginHandler(req,res) {
   });
 };
 // add new user to db
-va insertUserHandler = function  (req, res){
+var insertUserHandler = function  (req, res){
 	
 };
 // get the list of all users
@@ -102,7 +105,8 @@ var userListHandler = function (req,res){
 // ROUTING
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 app.get("/",function(req,res){
-	res.send("index.html");
+    app.use("/public", express.static(__dirname + "/"));
+	res.sendFile(path.join(__dirname + '/index.html'));
 });
 app.get("/logingRequest", function(req,res){
 	loginHandler(req, res);
