@@ -63,7 +63,8 @@ var loginHandler = function (req,res) {
           return;
         }   
         console.log('connected as id ' + connection.threadId + " : "+ req.query.username);
-        var selectQuery = "select * from clientele where username = '"+ req.query.username+"'";
+        var selectQuery = "select * from clientele where username = '"+ req.query.username+"' and motdepasse='"+req.query.passwrd+"'";
+        console.log(selectQuery);
         connection.query(selectQuery,function(err,rows){
             connection.release();
             if(!err) {

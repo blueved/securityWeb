@@ -4,7 +4,6 @@
     app.factory('requestService', function($http){
 		  var factory = {};
 		  factory.loginRequest = function(data){
-              debugger;
 				var url = "/logingRequest"; 
                 console.log("sending loging request");
 				return $http({  method: 'GET',  url: url, params: data});
@@ -20,6 +19,10 @@
 	  app.controller('MainController', function(){
 		  
 	  }); 
+    
+      app.controller('TabController', function(){
+          
+      });
     
 	  app.controller ('LoginController', ['requestService', function( requestService){
 		  var self = this;
@@ -45,8 +48,15 @@
 				console.log(formData);
 				requestService.loginRequest( formData)
 				.then(function mysuccess (response){
+                    debugger;
 					console.log("success: "+ response.data); 
+                    if (response.data.length === 0){
+                        console.log("No record found");
+                    }else{
+                        console.log("Welcome "+ response.data.username);
+                    }
 				}, function myError (response){
+                    debugger;
                     console.log("ERROR : "+ response.statusText);
                 });
 			};

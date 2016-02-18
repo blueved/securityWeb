@@ -9,9 +9,9 @@
     <link href="/public/css/bootstrap-theme.css" rel="stylesheet" type="text/css">
     <link href="/public/css/main.css" rel="stylesheet" type="text/css">
     
-    <script type="text/javascript" src="/public/js/jquery-2.1.3.min.js"></script>
-    <script type="text/javascript" src="/public/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="/public/js/angular.min.js"></script>
+    <script type="text/javascript" src="/public/libs/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" src="/public/libs/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/public/libs/angular.min.js"></script>
 	<script type="text/javascript" src="/public/js/app.js"></script>
 
 
@@ -40,6 +40,16 @@
 				</div>-->
 			</section><!-- content -->
 		</div><!-- container -->
-	</div>
+
+        <div ng-controller+"TabController as tabCtrl" ng-show="mainCtrl.showTabs">
+            <ul class="nav nav-pills">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#">Live Stream</a></li>
+              <li><a href="#">Image Viewer</a></li>
+              <li><a href="#">Misc</a></li>
+            </ul>
+        </div>
+    </div>
+    
 </body>
 </html>
