@@ -17,7 +17,8 @@
 	  });
     
 	  app.controller('MainController', function(){
-		  
+		  var self = this;
+          self.showTabs = false;
 	  }); 
     
       app.controller('TabController', function(){
@@ -26,7 +27,7 @@
     
 	  app.controller ('LoginController', ['requestService', function( requestService){
 		  var self = this;
-		  var formData = {
+		  self.formData = {
                 firstname: "default",
                 lastname:"default",
                 username:"default",
@@ -40,13 +41,13 @@
 			};
 			
 			self.save = function() {
-				formData = self.form;
+				self.formData = self.form;
 			};
 
 			self.submitForm = function() {        
-				formData = self.form;
-				console.log(formData);
-				requestService.loginRequest( formData)
+				self.formData = self.form;
+				console.log(self.formData);
+				requestService.loginRequest( self.formData)
 				.then(function mysuccess (response){
                     debugger;
 					console.log("success: "+ response.data); 

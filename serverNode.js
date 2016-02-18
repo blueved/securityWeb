@@ -75,7 +75,7 @@ var loginHandler = function (req,res) {
                 console.log("Hooo");
                 res.json({"code" : 202, "status" : "No data found"});
             }
-            
+            return res;
         });
         connection.on('error', function(err) {      
               res.json({"code" : 100, "status" : "Error in connection database"});
