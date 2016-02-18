@@ -63,7 +63,7 @@ var loginHandler = function (req,res) {
           return;
         }   
         console.log('connected as id ' + connection.threadId + " : "+ req.query.username);
-        var selectQuery = "select * from clientele where username = '"+ req.query.username+"' and motdepasse='"+req.query.passwrd+"'";
+        var selectQuery = "SELECT * FROM clientele WHERE username='"+ req.query.username+"' AND motdepasse='"+req.query.passwrd+"'";
         console.log(selectQuery);
         connection.query(selectQuery,function(err,rows){
             connection.release();
@@ -123,4 +123,4 @@ app.get("/userList", function(res,req){
 	userListHandler(req,res);
 });
 
-app.listen(3000);
+app.listen(3001);
