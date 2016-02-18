@@ -1,6 +1,11 @@
+// http://expressjs.com/en/api.html
+// https://codeforgeek.com/2014/09/handle-get-post-request-express-4/
+
 var express    = require("express");
+var bodyParser = require("body-parser");
 var mysql      = require('mysql');
 var path       = require('path');
+var app       =    express();
 /*
 var connection = mysql.createConnection({
   host     : 'localhost',
@@ -35,12 +40,10 @@ app.get("/",function(req,res){
 app.listen(3000);
 */
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// run this server: node serverNode.js
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-var express   =    require("express");
-var mysql     =    require('mysql');
-var app       =    express();
 
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 
 var pool      =    mysql.createPool({
@@ -75,11 +78,10 @@ var loginHandler = function (req,res) {
                 console.log("Hooo");
                 res.json({"code" : 202, "status" : "No data found"});
             }
-            return res;
+            //return res;
         });
         connection.on('error', function(err) {      
-              res.json({"code" : 100, "status" : "Error in connection database"});
-              return;     
+              res.json({"code" : 100, "status" : "Error in connection database"});   
         });
   });
 };
@@ -115,12 +117,33 @@ app.get("/",function(req,res){
     app.use("/public", express.static(__dirname + "/"));
 	res.sendFile(path.join(__dirname + '/index.html'));
 });
+app.post('/login',function(req,res){
+  var user_name=req.body.user;
+  var password=req.body.password;
+  console.log("User name = "+user_name+", password is "+password);
+  res.end("yes");
+});
 app.get("/logingRequest", function(req,res){
     console.log("login request received" );
+    req.accepts('application/json')
 	loginHandler(req, res);
+    console.log("done with the current login request");
 });
 app.get("/userList", function(res,req){
 	userListHandler(req,res);
 });
+app.get("/test", function(res.req){
+    connection.query('SELECT * from clientele', function(err, rows, fields) {
+        connection.end();
+        if (!err){
+            console.log('The solution is: ', rows);
+            res.json({"code" : 100, "status" : "Success"});
+        }
+        else{
+            console.log('Error while performing Query.');
+            res.json({"code" : 100, "status" : "Error in connection database"});
+        }
+    });
+})
 
-app.listen(3001);
+app.listen(3000);

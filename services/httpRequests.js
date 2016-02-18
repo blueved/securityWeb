@@ -1,5 +1,5 @@
-(function() {
-	var app = angular.module('securityApp', []);
+(function(){
+    var app = angular.module('securityApp', []);
     
     app.factory('requestService', function($http){
 		  var factory = {};
@@ -15,17 +15,4 @@
 		  
 		  return factory;
 	  });
-    
-	app.controller('MainController', function(){
-		  var self = this;
-          self.showTabs = false;
-    }); 
-    
-    app.controller('TabController', function(){
-          
-	});
-    
-	  
-	  
-	  
-  })();
+})();
