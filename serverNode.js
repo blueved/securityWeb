@@ -5,8 +5,8 @@ var express    = require("express");
 var bodyParser = require("body-parser");
 var mysql      = require('mysql');
 var path       = require('path');
-var app       =    express();
-/*
+var app        =  express();
+
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'pi',
@@ -14,6 +14,9 @@ var connection = mysql.createConnection({
   database : 'vids'
 });
 var app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(express.static(__dirname + '/public'));
 
 connection.connect(function(err){
     if(!err) {
@@ -24,28 +27,26 @@ connection.connect(function(err){
 });
 
 app.get("/",function(req,res){
-    connection.query('SELECT * from clientele', function(err, rows, fields) {
-        connection.end();
-          if (!err){
-            console.log('The solution is: ', rows);
-            res.json({"code" : 100, "status" : "Success"});
-          }
-          else{
-            console.log('Error while performing Query.');
-            res.json({"code" : 100, "status" : "Error in connection database"});
-          }
+    console.log("home login");
+    app.use("/public", express.static(__dirname + "/"));
+	res.sendFile(path.join(__dirname + '/index.html'));
+});
+
+app.get("/userList", function(req, res){
+	connection.query("select * from clientele",function(err,rows){
+        console.log("query sent "+ JSON.stringify(rows));
+        if(!err) {
+           console.log(req.body);
+           res.send(rows);
+        }           
+    });
+    connection.on('error', function(err) { 
+        console.log("Error connection");
     });
 });
 
-app.listen(3000);
-*/
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(express.static(__dirname + '/public'));
-
+/*
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 var pool      =    mysql.createPool({
     connectionLimit : 100, //important
     host     : 'localhost',
@@ -99,14 +100,15 @@ var userListHandler = function (req,res){
         }   
         console.log('connected as id ' + connection.threadId);
         connection.query("select * from clientele",function(err,rows){
+            console.log("query sent "+ err + " : " + rows);
             connection.release();
             if(!err) {
                 res.json(rows);
             }           
         });
-        connection.on('error', function(err) {      
-              res.json({"code" : 100, "status" : "Error in connection database"});
-              return;     
+        connection.on('error', function(err) { 
+            console.log("Error connection");
+              res.json({"code" : 100, "status" : "Error in connection database"});    
         });
   });
 };
@@ -114,6 +116,7 @@ var userListHandler = function (req,res){
 // ROUTING
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 app.get("/",function(req,res){
+    console.log("home login");
     app.use("/public", express.static(__dirname + "/"));
 	res.sendFile(path.join(__dirname + '/index.html'));
 });
@@ -132,7 +135,7 @@ app.get("/logingRequest", function(req,res){
 app.get("/userList", function(res,req){
 	userListHandler(req,res);
 });
-app.get("/test", function(res.req){
+app.get("/test", function(res,req){
     connection.query('SELECT * from clientele', function(err, rows, fields) {
         connection.end();
         if (!err){
@@ -144,6 +147,7 @@ app.get("/test", function(res.req){
             res.json({"code" : 100, "status" : "Error in connection database"});
         }
     });
-})
+});
+*/
 
 app.listen(3000);

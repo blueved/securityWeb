@@ -17,7 +17,7 @@
 	<script type="text/javascript" src="/public/js/app.js"></script>
 
     <script>
-        <--! https://codeforgeek.com/2014/09/handle-get-post-request-express-4/ -->
+        
           $(document).ready(function(){
             var user,pass;
             $("#submit").click(function(){
@@ -35,7 +35,14 @@
 <body ng-cloak>
 	<div ng-controller="MainController as mainCtrl">
 		<div class="container">
-			<section ng-controller="LoginController as logCtrl" id="content">
+            <section ng-controller="TestController as vm" >
+                <button type=button ng-click="vm.testBtn()" >Users List</button>
+                <div style="border:1px solid red; height: 20px; width:20vw;">{{vm.xx}}</div>
+                <div ng-repeat="item in vm.userList ">
+                    <div>{{item.firstname}}  {{item.lastname}} - {{item.username}}</div>
+                </div>
+            </section>
+			<!--<section ng-controller="LoginController as logCtrl" id="content">
 				<form action="" ng-model="logCtrl.form" ng-submit="logCtrl.submitForm()" >
 					<h1>Login Form</h1>
 					<div>
@@ -50,15 +57,13 @@
 						<a href="#">Lost your password?</a>
 						<a href="#">Register</a>
 					</div>
-				</form><!-- form -->
-				<!--<div class="button">
-				<a href="#">Download source file</a>
-				</div>-->
+				</form>
+				
                 <hr />
-                firstname: {{logCtrl.formData.firstname}}
+                
                 <hr />
-			</section><!-- content -->
-		</div><!-- container -->
+			</section> -->
+		</div>
         
     </div>
     
