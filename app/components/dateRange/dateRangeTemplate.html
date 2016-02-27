@@ -1,0 +1,36 @@
+<section  >
+                <div class="row">
+                    <!-- Single button with keyboard nav -->
+                    <div class="btn-group col-md-3" uib-dropdown keyboard-nav>
+                        <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" uib-dropdown-toggle>
+                            {{dr.dateRange}} <span class="caret"></span>
+                        </button>
+                        <ul uib-dropdown-menu role="menu" aria-labelledby="simple-btn-keyboard-nav" ng-model="dr.dateRange">
+                            <li ng-repeat = "choice in dr.choicesDate" ng-click="dr.dateRange = choice;dr.setRange(choice)"><a href>{{choice}}<a></a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="input-group">
+                          <input type="text" class="form-control" uib-datepicker-popup="{{dr.format}}" ng-model="dr.dtFrom" is-open="dr.popup1.opened" min-date="minDate" max-date="maxDate" datepicker-options="dr.dateOptions" date-disabled="dr.disabled(date, mode)" ng-required="true" close-text="Close" alt-input-formats="dr.altInputFormats" />
+                          <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="dr.open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                          </span>
+                        </p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <p class="input-group">
+                          <input type="text" class="form-control" uib-datepicker-popup="{{dr.format}}" ng-model="dr.dtTo" is-open="dr.popup2.opened" 
+                                 min-date="minDate" max-date="maxDate" datepicker-options="dr.dateOptions" date-disabled="dr.disabled(date, mode)" ng-required="true" close-text="Close" />
+                          <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="dr.open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                          </span>
+                        </p>
+                    </div>
+                    <div class="col-md-3">
+                            <button type="button" class="btn btn-primary" ng-click="dr.getImages()" >
+                            Get Images
+                        </button>
+                    </div>
+                </div>
+            </section> 
