@@ -45,8 +45,13 @@
 	<div ng-controller="HomeController as hc">
 		<div class="container" ng-controller="DateRangeController as dr" >
             
-            <div date-range  date-to="" date-from="" ></div>
+            <div date-range  dt-to="dr.dateFrom" dt-from="dr.dateTo" ></div>
             <hr />
+            <div class="col-md-3">
+                    <button type="button" class="btn btn-primary" ng-click="vm.getImages()" >
+                    Get Images
+                </button>
+            </div>
 			<!--<section ng-controller="LoginController as logCtrl" id="content">
 				<form action="" ng-model="logCtrl.form" ng-submit="logCtrl.submitForm()" >
 					<h1>Login Form</h1>
