@@ -2,8 +2,8 @@ app.directive( "dateRange",  function(){
     return {
         restrict: 'EA',
         scope:{
-            dtFrom: '=',
-            dtTo :  '='
+            dateFrom: '=',
+            dateTo  : '='
         },
         
         controller: function($scope){
@@ -11,51 +11,51 @@ app.directive( "dateRange",  function(){
             
             self.setRange = function(item){
                 switch (item){
-                    case 'Previous Month':
+                    case 'Last Month':
                         self.setPreviousMonth();
                         break;
-                    case 'Previous Week':
+                    case 'Last Week':
                         self.setPreviousWeek();
                         break;
                     case 'Today':
-                        self.dtFrom = new Date();
-                        self.dtTo = new Date();
+                        $scope.dateFrom = new Date();
+                        $scope.dateFrom = new Date();
                         break;
-                    case 'Current Week':
+                    case 'This Week':
                         self.setCurrentWeek();
                         break;
-                    case 'Current Month':
+                    case 'This Month':
                         self.setCurrentMontMonth();
                         break;
                 }
             };
             self.clear = function() {
-                self.dtFrom = null;
-                self.dtTo = null;
+                $scope.dateFrom = null;
+                $scope.dateFrom = null;
             };
             self.setPreviousWeek = function(){
                   var from =  moment().subtract(1, 'weeks').startOf('isoWeek');
                   var to  = moment().subtract(1, 'weeks').endOf('isoWeek');
-                  self.dtFrom = new Date(from);
-                  self.dtTo = new Date(to);
+                  $scope.dateFrom = new Date(from);
+                  $scope.dateFrom = new Date(to);
             };
             self.setPreviousMonth = function(){
                   var from =  moment().subtract(1,'months').startOf('month').format('YYYY-MM-DD');
                   var to  = moment().subtract(1,'months').endOf('month').format('YYYY-MM-DD');
-                  self.dtFrom = new Date(from);
-                  self.dtTo = new Date(to);
+                  $scope.dateFrom = new Date(from);
+                  $scope.dateFrom = new Date(to);
               };
             self.setCurrentWeek = function(){
                     var from =  moment().startOf('week').format('YYYY-MM-DD');
                     var to  = moment().format('YYYY-MM-DD');
-                    self.dtFrom = new Date(from);
-                    self.dtTo = new Date(to);
+                    $scope.dateFrom = new Date(from);
+                    $scope.dateFrom = new Date(to);
             };
             self.setCurrentMontMonth = function(){
                   var from =  moment().startOf('month').format('YYYY-MM-DD');
                   var to  = moment().format('YYYY-MM-DD');
-                  self.dtFrom = new Date(from);
-                  self.dtTo = new Date(to);
+                  $scope.dateFrom = new Date(from);
+                  $scope.dateFrom = new Date(to);
               };
             
          // Disable weekend selection
@@ -115,11 +115,10 @@ app.directive( "dateRange",  function(){
 
           
             
-            self.init = function(){
+            self.init = function(){ 
                 self.dateRange = "Today";
-                self.dtFrom = new Date();
-                self.dtTo   = new Date();
-                self.choicesDate = ['Previous Month', 'Previous Week', 'Today', 'Current Week', 'Current Month' ];
+                $scope.dateFrom   = $scope.dateTo;
+                self.choicesDate = ['Last Month', 'Last Week', 'Today', 'This Week', 'This Month' ];
                 self.dateOptions = {
                     formatYear: 'yy',
                     startingDay: 1

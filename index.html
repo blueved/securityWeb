@@ -20,7 +20,6 @@
     
     <script type="text/javascript" src="/public/app/app.js"></script>
     <script type="text/javascript" src="/public/app/components/home/HomeController.js"></script>
-    <script type="text/javascript" src="/public/app/components/dateRange/DateRangeController.js"></script>
     <script type="text/javascript" src="/public/app/components/dateRange/DateRangeDirective.js"></script>
     
     <script type="text/javascript" src="/public/app/components/imageViewer/ImageViewerController.js"></script>
@@ -44,12 +43,12 @@
 </head>
 <body ng-cloak>
 	<div ng-controller="HomeController as hc">
-		<div class="container" ng-controller="DateRangeController as dr" >
+		<div class="container"  >
             
-            <div date-range  dt-to="dr.dateFrom" dt-from="dr.dateTo" ></div>
+            <div date-range  date-from='hc.dateFrom' date-to='hc.dateTo' ></div>
             <hr />
-            <div class="col-md-3">
-                    <button type="button" class="btn btn-primary" ng-click="vm.getImages()"> Get Images </button>
+            <div class="col-md-2">
+                    <button type="button" class="btn btn-primary" ng-click="vm.getImages()"> Get Images </button> 
             </div>
 			<!--<section ng-controller="LoginController as logCtrl" id="content">
 				<form action="" ng-model="logCtrl.form" ng-submit="logCtrl.submitForm()" >
