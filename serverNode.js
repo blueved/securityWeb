@@ -116,7 +116,7 @@ var userListHandler = function (req,res){
 // ROUTING
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 app.get("/",function(req,res){
-    console.log("home login");
+    console.log("POOL home login");
     app.use("/public", express.static(__dirname + "/"));
 	res.sendFile(path.join(__dirname + '/index.html'));
 });
@@ -135,7 +135,7 @@ app.get("/logingRequest", function(req,res){
 app.get("/userList", function(res,req){
 	userListHandler(req,res);
 });
-app.get("/test", function(res,req){
+app.get("/test/", function(res,req){
     connection.query('SELECT * from clientele', function(err, rows, fields) {
         connection.end();
         if (!err){
