@@ -88,10 +88,6 @@ var loginHandler = function (req,res) {
         });
   });
 };
-// add new user to db
-var insertUserHandler = function  (req, res){
-	
-};
 // get the list of all users
 var userListHandler = function (req,res){
 	pool.getConnection(function(err,connection){
@@ -114,6 +110,33 @@ var userListHandler = function (req,res){
         });
   });
 };
+//
+// RETRIEVE IMAGES
+// 
+var getAllImages = function(req, res){
+    
+};
+// core handler
+var coreHandler = function(req, res, queryStr){
+    pool.getConnection(function(err,connection){
+        if (err) {
+          connection.release();
+          res.json({"code" : 100, "status" : "Error in connection database"});
+          return;
+        }   
+        console.log('connected as id ' + connection.threadId);
+        connection.query("select * from clientele",function(err,rows){
+            console.log("query sent "+ err + " : " + rows);
+            connection.release();
+            if(!err) {
+                res.json(rows);
+            }           
+        });
+        connection.on('error', function(err) { 
+            console.log("Error connection");
+              res.json({"code" : 100, "status" : "Error in connection database"});    
+        });
+};
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ROUTING
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -122,35 +145,19 @@ app.get("/",function(req,res){
     app.use("/public", express.static(__dirname + "/"));
 	res.sendFile(path.join(__dirname + '/index.html'));
 });
-app.post('/login',function(req,res){
-  var user_name=req.body.user;
-  var password=req.body.password;
-  console.log("User name = "+user_name+", password is "+password);
-  res.end("yes");
-});
 app.get("/logingRequest", function(req,res){
-    console.log("login request received" );
-    req.accepts('application/json')
+    console.log("/logingRequest" );
+    req.accepts('application/json');
 	loginHandler(req, res);
     console.log("done with the current login request");
 });
-app.get("/userList", function(res,req){
-	userListHandler(req,res);
+app.get("/userList", function(req, res){
+	console.log("/userList" );
+    req.accepts('application/json');
+    userListHandler(req,res);
+    //res.end("yes");
 });
-app.get("/test", function(res, req){
-    connection.query('SELECT * from clientele', function(err, rows, fields) {
-        connection.end();
-        if (!err){
-            console.log('The solution is: ', rows);
-            //res.send({"code" : 100, "status" : "Success"});
-            res.send(rows);
-        }
-        else{
-            console.log('Error while performing Query.');
-            res.json({"code" : 100, "status" : "Error in connection database"});
-        }
-    });
-});
+
 
 
 app.listen(3000);
