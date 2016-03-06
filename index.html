@@ -9,20 +9,7 @@
     <link href="/public/assets/css/bootstrap-theme.css" rel="stylesheet" type="text/css">
     <link href="/public/assets/css/main.css" rel="stylesheet" type="text/css">
     
-    <script type="text/javascript" src="/public/assets/libs/angular.min.js"></script>
-    <script type="text/javascript" src="/public/assets/libs/angular-ui-bootstrap.1.1.2.js"></script>
-    <!--<script type="text/javascript" src="/public/libs/jquery-2.1.3.min.js"></script>-->
-   <!-- <script type="text/javascript" src="/public/assets/libs/bootstrap.min.js"></script>-->
-	
-    <script type="text/javascript" src="/public/assets/libs/moment.js"></script>
-     <script type="text/javascript" src="/public/app/app.js"></script>
-    <script type="text/javascript" src="/public/app/shared/services/httpRequests.js"></script>
     
-   
-    <script type="text/javascript" src="/public/app/components/home/HomeController.js"></script>
-    <script type="text/javascript" src="/public/app/components/dateRange/DateRangeDirective.js"></script>
-    
-    <script type="text/javascript" src="/public/app/components/imageViewer/ImageViewerController.js"></script>
 	
 
     <!--<script>
@@ -48,8 +35,39 @@
             <div date-range  date-from='hc.dateFrom' date-to='hc.dateTo' ></div>
             <hr />
             <div class="col-md-2">
-                    <button type="button" class="btn btn-primary" ng-click="vm.getImages()"> Get Images </button> 
+				<button type="button" class="btn btn-primary" ng-click="vm.getImages()"> Get Images </button> 
             </div>
+			<hr />
+			<div id="imageViewer" ng-controller="ImageViewerCtrl as imgCtrl">
+			  <div style="height: 305px">
+				<uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
+				  <uib-slide ng-repeat="slide in imgCtrl.slides track by slide.id" index="slide.id">
+					<img ng-src="{{slide.image}}" style="margin:auto;">
+					<div class="carousel-caption">
+					  <h4>Slide {{slide.id}}</h4>
+					  <p>{{slide.text}}</p>
+					</div>
+				  </uib-slide>
+				</uib-carousel>
+			  </div>
+			  <div class="row">
+				<div class="col-md-6">
+				  <button type="button" class="btn btn-info" ng-click="imgCtrl.addSlide()">Add Slide</button>
+				  <button type="button" class="btn btn-info" ng-click="imgCtrl.randomize()">Randomize slides</button>
+				  <div class="checkbox">
+					<label>
+					  <input type="checkbox" ng-model="noWrapSlides">
+					  Disable Slide Looping
+					</label>
+				  </div>
+				</div>
+				<div class="col-md-6">
+				  Interval, in milliseconds: <input type="number" class="form-control" ng-model="imgCtrl.myInterval">
+				  <br />Enter a negative number or 0 to stop the interval.
+				</div>
+			  </div>
+			</div>
+            <hr />
 			<!--<section ng-controller="LoginController as logCtrl" id="content">
 				<form action="" ng-model="logCtrl.form" ng-submit="logCtrl.submitForm()" >
 					<h1>Login Form</h1>
@@ -74,6 +92,19 @@
 		</div>
         
     </div>
+    <script type="text/javascript" src="/public/assets/libs/angular.min.js"></script>
+    <script type="text/javascript" src="/public/assets/libs/angular-ui-bootstrap.1.1.2.js"></script>
+    <!--<script type="text/javascript" src="/public/libs/jquery-2.1.3.min.js"></script>-->
+   <!-- <script type="text/javascript" src="/public/assets/libs/bootstrap.min.js"></script>-->
+	
+    <script type="text/javascript" src="/public/assets/libs/moment.js"></script>
+     <script type="text/javascript" src="/public/app/app.js"></script>
+    <script type="text/javascript" src="/public/app/shared/services/httpRequests.js"></script>
     
+   
+    <script type="text/javascript" src="/public/app/components/home/HomeController.js"></script>
+    <script type="text/javascript" src="/public/app/components/dateRange/DateRangeDirective.js"></script>
+    
+    <script type="text/javascript" src="/public/app/components/imageViewer/ImageViewerController.js"></script>
 </body>
 </html>

@@ -294,9 +294,9 @@ form:after {
   padding: 15px;
   }
 #imageScrollerContainer {
- position:relative;height:500px;border:1px solid blue;
+    position:relative;height:500px;
+    border:1px solid blue;
  }
-
 
 
 .full button span {
@@ -308,3 +308,9 @@ form:after {
     background-color: orange;
     border-radius: 32px;
     color: black;
+}
+#imageViewer{
+    border:2px solid yellow;
+    position:relative;
+    top: 30px;
+}

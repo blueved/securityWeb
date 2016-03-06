@@ -5,9 +5,9 @@
         <div class="col-md-3">TO:</div>
 
     </div>
-    <div class="row" style= "border:1px solid blue;">
+    <div class="row" >
         <!-- Single button with keyboard nav -->
-        <div class="btn-group col-md-2" uib-dropdown keyboard-nav style= "border:1px solid red;">
+        <div class="btn-group col-md-2" uib-dropdown keyboard-nav>
             <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" uib-dropdown-toggle>
                 {{vm.dateRange}} <span class="caret"></span>
             </button>
@@ -15,7 +15,7 @@
                 <li ng-repeat = "choice in vm.choicesDate" ng-click="vm.dateRange = choice;vm.setRange(choice)"><a href>{{choice}}<a></a></li>
             </ul>
         </div>
-        <div class="col-md-3" style= "border:1px solid green;">
+        <div class="col-md-3" >
             <p class="input-group">
               <input type="text" class="form-control" uib-datepicker-popup="{{vm.format}}" ng-model="dateFrom" is-open="vm.popup1.opened" 
                      min-date="minDate" max-date="maxDate" datepicker-options="vm.dateOptions" date-disabled="vm.disabled(date, mode)" ng-required="true" 
@@ -26,7 +26,7 @@
             </p>
         </div>
 
-        <div class="col-md-3" style= "border:1px solid yellow;">
+        <div class="col-md-3" >
             <p class="input-group">
               <input type="text" class="form-control" uib-datepicker-popup="{{vm.format}}" ng-model="dateTo" is-open="vm.popup2.opened" 
                      min-date="minDate" max-date="maxDate" datepicker-options="vm.dateOptions" date-disabled="vm.disabled(date, mode)" ng-required="true" 

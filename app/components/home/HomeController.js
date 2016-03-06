@@ -3,6 +3,7 @@ app.controller('HomeController',  ["requestService", function(requestService){
     self.init = function (){
         self.dateFrom = new Date();
         self.dateTo = new Date();
+        self.imgList = [];
         
         requestService.test()
         .then(function success (data){console.log('ca marche'); console.log(data);},
