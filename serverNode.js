@@ -13,6 +13,7 @@ var connection = mysql.createConnection({
   password : 'pi',
   database : 'vids'
 });
+/*
 var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -33,6 +34,7 @@ app.get("/",function(req,res){
 });
 
 app.get("/userList", function(req, res){
+    console.log("getting users list");
 	connection.query("select * from clientele",function(err,rows){
         console.log("query sent "+ JSON.stringify(rows));
         if(!err) {
@@ -45,7 +47,7 @@ app.get("/userList", function(req, res){
     });
 });
 
-/*
+*/
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 var pool      =    mysql.createPool({
     connectionLimit : 100, //important
@@ -135,12 +137,13 @@ app.get("/logingRequest", function(req,res){
 app.get("/userList", function(res,req){
 	userListHandler(req,res);
 });
-app.get("/test/", function(res,req){
+app.get("/test", function(res, req){
     connection.query('SELECT * from clientele', function(err, rows, fields) {
         connection.end();
         if (!err){
             console.log('The solution is: ', rows);
-            res.json({"code" : 100, "status" : "Success"});
+            //res.send({"code" : 100, "status" : "Success"});
+            res.send(rows);
         }
         else{
             console.log('Error while performing Query.');
@@ -148,6 +151,6 @@ app.get("/test/", function(res,req){
         }
     });
 });
-*/
+
 
 app.listen(3000);
