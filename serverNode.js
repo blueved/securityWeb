@@ -73,8 +73,13 @@ var userListHandler = function (req,res){
 //
 // RETRIEVE IMAGES
 // 
-var getAllImages = function(req, res){
+var imagesHandler = function(req, res){
+    var queryStr = "select * from security";
+    if(typeof req.params.fromDate !== 'undefined' &&  typeof req.params.toDate !== 'undefined'){
+        queryStr += "where time_stamp between str_to_date("+fromDate+") and str_to_date("+toDate+")";
+    }
     
+    coreHandler (req, res, queryStr);
 };
 //
 // CORE HANDLER
@@ -89,7 +94,6 @@ var coreHandler = function(req, res, queryStr){
         console.log('connected as id ' + connection.threadId + " : "+ req.query.username);
         console.log('Query: '+ queryStr);
         connection.query(queryStr,function(err,rows){
-            console.log("query sent: " + rows);
             connection.release();
             if(!err) {
                 res.json(rows);
@@ -124,6 +128,16 @@ app.get("/userList", function(req, res){
     userListHandler(req,res);
     //res.end("yes");
 });
+app.get("/images", function(req, res){
+    console.log("/userList" );
+    req.accepts('application/json');
+    imagesHandler(req,res);
+    //res.end("yes");
+});
+app.get("/images/:fromDate", function(req, res){
+    console.log("/images/..." + req.params.fromDate );
+    imagesHandler(req,res);
+})
 
 
 
