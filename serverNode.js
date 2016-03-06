@@ -62,53 +62,13 @@ var pool      =    mysql.createPool({
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // login: parameter is the user credential
 var loginHandler = function (req,res) {
-    pool.getConnection(function(err,connection){
-        if (err) {
-          connection.release();
-          res.json({"code" : 100, "status" : "Error in connection database"});
-          return;
-        }   
-        console.log('connected as id ' + connection.threadId + " : "+ req.query.username);
-        var selectQuery = "SELECT * FROM clientele WHERE username='"+ req.query.username+"' AND motdepasse='"+req.query.passwrd+"'";
-        console.log(selectQuery);
-        connection.query(selectQuery,function(err,rows){
-            connection.release();
-            if(!err) {
-                console.log("found a couple of rows "+  rows);
-                res.json(rows);
-                
-            }  else{
-                console.log("Hooo");
-                res.json({"code" : 202, "status" : "No data found"});
-            }
-            //return res;
-        });
-        connection.on('error', function(err) {      
-              res.json({"code" : 100, "status" : "Error in connection database"});   
-        });
-  });
+    var queryStr = "SELECT * FROM clientele WHERE username='"+ req.query.username+"' AND motdepasse='"+req.query.passwrd+"'";
+    coreHandler (req, res, queryStr);
 };
 // get the list of all users
 var userListHandler = function (req,res){
-	pool.getConnection(function(err,connection){
-        if (err) {
-          connection.release();
-          res.json({"code" : 100, "status" : "Error in connection database"});
-          return;
-        }   
-        console.log('connected as id ' + connection.threadId);
-        connection.query("select * from clientele",function(err,rows){
-            console.log("query sent "+ err + " : " + rows);
-            connection.release();
-            if(!err) {
-                res.json(rows);
-            }           
-        });
-        connection.on('error', function(err) { 
-            console.log("Error connection");
-              res.json({"code" : 100, "status" : "Error in connection database"});    
-        });
-  });
+    var queryStr = "select * from clientele";
+    coreHandler (req, res, queryStr);
 };
 //
 // RETRIEVE IMAGES
@@ -116,7 +76,9 @@ var userListHandler = function (req,res){
 var getAllImages = function(req, res){
     
 };
-// core handler
+//
+// CORE HANDLER
+//
 var coreHandler = function(req, res, queryStr){
     pool.getConnection(function(err,connection){
         if (err) {
@@ -124,18 +86,23 @@ var coreHandler = function(req, res, queryStr){
           res.json({"code" : 100, "status" : "Error in connection database"});
           return;
         }   
-        console.log('connected as id ' + connection.threadId);
-        connection.query("select * from clientele",function(err,rows){
-            console.log("query sent "+ err + " : " + rows);
+        console.log('connected as id ' + connection.threadId + " : "+ req.query.username);
+        console.log('Query: '+ queryStr);
+        connection.query(queryStr,function(err,rows){
+            console.log("query sent: " + rows);
             connection.release();
             if(!err) {
                 res.json(rows);
-            }           
+            } else{
+                console.log("Hooo");
+                res.json({"code" : 202, "status" : "No data found"});
+            }          
         });
         connection.on('error', function(err) { 
             console.log("Error connection");
               res.json({"code" : 100, "status" : "Error in connection database"});    
         });
+    });
 };
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ROUTING
