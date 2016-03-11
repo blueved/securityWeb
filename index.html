@@ -35,17 +35,17 @@
             <div date-range  date-from='hc.dateFrom' date-to='hc.dateTo' ></div>
             <hr />
             <div class="col-md-2">
-				<button type="button" class="btn btn-primary" ng-click="vm.getImages()"> Get Images </button> 
+				<button type="button" class="btn btn-primary" ng-click="hc.getImages()"> Get Images </button> 
             </div>
 			<hr />
 			<div id="imageViewer" ng-controller="ImageViewerCtrl as imgCtrl">
 			  <div style="height: 305px">
 				<uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
-				  <uib-slide ng-repeat="slide in imgCtrl.slides track by slide.id" index="slide.id">
-					<img ng-src="{{slide.image}}" style="margin:auto;">
+				  <uib-slide ng-repeat="slide in hc.imgList" >
+					<img ng-src="{{slide.filename}}" style="margin:auto;">
 					<div class="carousel-caption">
-					  <h4>Slide {{slide.id}}</h4>
-					  <p>{{slide.text}}</p>
+					  <h4>Slide {{$index}}</h4>
+					  <p>{{slide.filename}}</p>
 					</div>
 				  </uib-slide>
 				</uib-carousel>

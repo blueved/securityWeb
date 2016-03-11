@@ -21,9 +21,14 @@
         };
         
         var imageList = function(dateFrom, dateTo){
-            var url = "/imageList/";
-            var param = {dateFrom:dateFrom, dateTo:dateTo};
-            return $http({mehtod:"POST", url:url, param:param });
+            var url = "/images";
+            if(typeof dateFrom != 'undefined' && typeof dateTo != 'undefined'){
+                var f = moment(dateFrom).format("YYYY-MM-DD HH:MM:SS");
+                var t = moment(dateTo).format("YYYY-MM-DD HH:MM:SS");
+                url += "/"+f+"/"+t;
+            }
+                        
+            return $http({mehtod:"GET", url:url});
         };
         
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

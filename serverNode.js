@@ -74,9 +74,9 @@ var userListHandler = function (req,res){
 // RETRIEVE IMAGES
 // 
 var imagesHandler = function(req, res){
-    var queryStr = "select * from security";
+    var queryStr = "select * from security ";
     if(typeof req.params.fromDate !== 'undefined' &&  typeof req.params.toDate !== 'undefined'){
-        queryStr += "where time_stamp between str_to_date("+fromDate+") and str_to_date("+toDate+")";
+        queryStr += "where (time_stamp BETWEEN '"+req.params.fromDate+"' AND '"+req.params.toDate+"')";
     }
     
     coreHandler (req, res, queryStr);
@@ -134,10 +134,10 @@ app.get("/images", function(req, res){
     imagesHandler(req,res);
     //res.end("yes");
 });
-app.get("/images/:fromDate", function(req, res){
-    console.log("/images/..." + req.params.fromDate );
+app.get("/images/:fromDate/:toDate", function(req, res){
+    console.log("/images/..." + req.params.fromDate+ " - " + req.params.toDate );
     imagesHandler(req,res);
-})
+});
 
 
 
