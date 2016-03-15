@@ -23,8 +23,8 @@
         var imageList = function(dateFrom, dateTo){
             var url = "/images";
             if(typeof dateFrom != 'undefined' && typeof dateTo != 'undefined'){
-                var f = moment(dateFrom).format("YYYY-MM-DD HH:MM:SS");
-                var t = moment(dateTo).format("YYYY-MM-DD HH:MM:SS");
+                var f = moment(dateFrom).format("YYYY-MM-DD HH:MM:ss");
+                var t = moment(dateTo).format("YYYY-MM-DD HH:MM:ss");
                 url += "/"+f+"/"+t;
             }
                         

@@ -19,7 +19,7 @@ app.directive( "dateRange",  function(){
                         break;
                     case 'Today':
                         $scope.dateFrom = new Date();
-                        $scope.dateFrom = new Date();
+                        $scope.dateTo = new Date();
                         break;
                     case 'This Week':
                         self.setCurrentWeek();
@@ -31,31 +31,31 @@ app.directive( "dateRange",  function(){
             };
             self.clear = function() {
                 $scope.dateFrom = null;
-                $scope.dateFrom = null;
+                $scope.dateTo = null;
             };
             self.setPreviousWeek = function(){
                   var from =  moment().subtract(1, 'weeks').startOf('isoWeek');
                   var to  = moment().subtract(1, 'weeks').endOf('isoWeek');
                   $scope.dateFrom = new Date(from);
-                  $scope.dateFrom = new Date(to);
+                  $scope.dateTo = new Date(to);
             };
             self.setPreviousMonth = function(){
                   var from =  moment().subtract(1,'months').startOf('month').format('YYYY-MM-DD');
                   var to  = moment().subtract(1,'months').endOf('month').format('YYYY-MM-DD');
                   $scope.dateFrom = new Date(from);
-                  $scope.dateFrom = new Date(to);
+                  $scope.dateTo = new Date(to);
               };
             self.setCurrentWeek = function(){
                     var from =  moment().startOf('week').format('YYYY-MM-DD');
                     var to  = moment().format('YYYY-MM-DD');
                     $scope.dateFrom = new Date(from);
-                    $scope.dateFrom = new Date(to);
+                    $scope.dateTo = new Date(to);
             };
             self.setCurrentMontMonth = function(){
                   var from =  moment().startOf('month').format('YYYY-MM-DD');
                   var to  = moment().format('YYYY-MM-DD');
                   $scope.dateFrom = new Date(from);
-                  $scope.dateFrom = new Date(to);
+                  $scope.dateTo = new Date(to);
               };
             
          // Disable weekend selection
