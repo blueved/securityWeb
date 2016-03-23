@@ -40,25 +40,27 @@
 			<hr />
 			<div id="imageViewer" ng-controller="ImageViewerCtrl as imgCtrl">
 			  <div style="height: 305px">
-				<uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
-				  <uib-slide ng-repeat="slide in hc.imgList" >
+				<uib-carousel actual="imgCtrl"  interval="imgCtrl.myInterval" no-wrap="imgCtrl.noWrapSlides">
+				  <uib-slide ng-repeat="slide in hc.imgList"  active="slide.active">
 					<img ng-src="{{slide.src}}" style="margin:auto;">
-					<div class="carousel-caption">
-					  <h4>Slide {{$index}}</h4>
-					</div>
+					<div class="outOfImageViewer">Slide {{$index}}</div>
 				  </uib-slide>
 				</uib-carousel>
 			  </div>
               <br />
+              
 			  <div class="row">
 				<div class="col-md-6">
-				  <button type="button" class="btn btn-info" ng-click="imgCtrl.addSlide()">Add Slide</button>
-				  <button type="button" class="btn btn-info" ng-click="imgCtrl.randomize()">Randomize slides</button>
+                    <button type="button" class="btn btn-info" ng-click="imgCtrl.toggleSlider()">
+                        {{imgCtrl.playLabel}}
+                    </button>
+				  <!--<button type="button" class="btn btn-info" ng-click="imgCtrl.addSlide()">Add Slide</button>
+				  <button type="button" class="btn btn-info" ng-click="imgCtrl.randomize()">Randomize slides</button>-->
+  
 				  <div class="checkbox">
 					<label>
-					  <input type="checkbox" ng-model="noWrapSlides">
-					  Disable Slide Looping
-					</label>
+                        <input type="checkbox" ng-model="imgCtrl.noWrapSlides">Disable Slide Looping
+                    </label>
 				  </div>
 				</div>
 				<div class="col-md-6">

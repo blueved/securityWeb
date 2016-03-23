@@ -8,7 +8,7 @@ app
 .controller('HomeController',  ["requestService", function(requestService){
     var self = this;
     self.imgList = [];
-    
+
     self.getImages = function(){
         requestService.imageList(self.dateFrom,self.dateTo )
         .then(function ole(data){

@@ -1,17 +1,32 @@
 app.controller('ImageViewerCtrl', function ($scope) {
     var self = this;
-    self.myInterval = 5000;
     self.noWrapSlides = false;
-    self.active = 0;
-    var slides = self.slides = [];
-    var currIndex = 0;
+    self.active = 10;
+    self.myInterval = 400;
+    self.playMode = true;
+    self.playLabel = self.playMode?"Pause":"Play";
+    var currInterval =  self.myInterval;
 
-    self.addSlide = function() {
+    var slides = self.slides = [];
+    self.currIndex = 0;
+    self.toggleSlider = function(){
+        
+        if (self.playMode){
+            self.myInterval = currInterval;
+            self.playMode = false;
+        }else{
+            currInterval = self.myInterval;
+            self.playMode = true;
+            self.myInterval = 0;
+        }
+    };
+
+    /*self.addSlide = function() {
         var newWidth = 600 + slides.length + 1;
         slides.push({
           image: 'http://lorempixel.com/' + newWidth + '/300',
           text: ['Nice image','Awesome photograph','That is so cool','I love that'][slides.length % 4],
-          id: currIndex++
+          id: self.currIndex++
         });
     };
 
@@ -20,9 +35,7 @@ app.controller('ImageViewerCtrl', function ($scope) {
         assignNewIndexesToSlides(indexes);
     };
 
-    for (var i = 0; i < 4; i++) {
-        self.addSlide();
-    }
+    
 
     // Randomize logic below
 
@@ -34,7 +47,7 @@ app.controller('ImageViewerCtrl', function ($scope) {
 
     function generateIndexesArray() {
     var indexes = [];
-        for (var i = 0; i < currIndex; ++i) {
+        for (var i = 0; i < self.currIndex; ++i) {
           indexes[i] = i;
         }
         return shuffle(indexes);
@@ -54,5 +67,5 @@ app.controller('ImageViewerCtrl', function ($scope) {
         }
 
         return array;
-    }
+    }*/
 });
