@@ -4,6 +4,7 @@
     <title>Monitor</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 
     <link href="/public/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="/public/assets/css/bootstrap-theme.css" rel="stylesheet" type="text/css">
@@ -43,17 +44,26 @@
 			  <div style="height: 305px">
 				<uib-carousel actual="imgCtrl"  interval="imgCtrl.myInterval" no-wrap="imgCtrl.noWrapSlides">
 				  <uib-slide ng-repeat="slide in hc.imgList"  active="slide.active">
-					<img ng-src="{{slide.src}}" style="margin:auto;">
+					<img ng-src="{{slide.src}}" style="margin:auto;" ng-model="imgCtrl.active">
 					<div class="outOfImageViewer">Slide {{$index}}</div>
 				  </uib-slide>
 				</uib-carousel>
 			  </div>
               <br />
+                
+            <div class="row" style="border:1px solid pink;">
+                
+                <input class="col-md-9" type="range" max ="hc.imageIndex.length" id="myRange"  ng-model="hc.imageIndex"  value="hc.imageIndex">
+                <div class="sliderCounter col-md-3" >{{hc.imageIndex}} </div>
+                
+            </div>
+            <br />
               
 			  <div class="row">
 				<div class="col-md-6">
-                    <button type="button" class="btn btn-info" ng-click="imgCtrl.toggleSlider()">
-                        {{imgCtrl.playLabel}}
+                    <button style="font-size:24px" type="button" class="btn btn-info" ng-click="imgCtrl.toggleSlider()" 
+                            ng-class="{ 'fa fa-play':imgCtrl.myInterval<= 0 , 'fa fa-pause':  imgCtrl.myInterval > 0} ">
+              
                     </button>
 				  <!--<button type="button" class="btn btn-info" ng-click="imgCtrl.addSlide()">Add Slide</button>
 				  <button type="button" class="btn btn-info" ng-click="imgCtrl.randomize()">Randomize slides</button>-->
@@ -72,7 +82,10 @@
 			</div>
             
             <br />
+            
             <hr />
+            
+            
 			<!--<section ng-controller="LoginController as logCtrl" id="content">
 				<form action="" ng-model="logCtrl.form" ng-submit="logCtrl.submitForm()" >
 					<h1>Login Form</h1>

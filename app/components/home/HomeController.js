@@ -9,6 +9,7 @@ app
     var self = this;
     self.imgList = [];
     self.imageIndex = 0;
+    self.imageSlider = 39;
 
     self.getImages = function(){
         requestService.imageList(self.dateFrom,self.dateTo )
